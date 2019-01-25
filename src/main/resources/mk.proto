@@ -1,0 +1,22 @@
+package tracking;
+message mk
+{
+    required    int32    project_id = 1;
+    required    int32    account_id = 2;
+    required    int32    vendor_id = 3;
+    required    int64    campaign_id = 4;
+    required    int64    adgroup_id = 5;
+    required    int64    ad_id = 6;
+    repeated    int64    material_id = 7;
+    optional    int64    template_id =8;
+    optional    string    material_type = 9 [default = "1"];
+    required    string    request_id = 10;
+    required    string    adx_user_id = 11;
+    required    string    adslot_id = 12;
+    required    int64    time_stamp = 13;
+    required    int32    random = 14;
+    required    string    secret_key = 15;
+    optional    string    idfa = 16;
+    optional    string    hash_idfa = 17;
+    required    string    location_url = 18; // if mobile app,this value is appid
+}

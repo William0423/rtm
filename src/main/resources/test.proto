@@ -1,0 +1,11 @@
+
+package protobuf;
+
+option java_package = "test.protobuf";
+
+message testBuf {
+	required int32 ID = 1;
+	required string url = 2;
+
+	optional int64 timestamp = 3;
+}

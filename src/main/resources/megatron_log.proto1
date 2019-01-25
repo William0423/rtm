@@ -1,0 +1,40 @@
+
+package megatronlog;
+option java_package = "com.zamplus.pb";
+
+message Megatronlogs4Rtm
+{
+  message Log {
+  //前四个字段日志处理要求必填，如bid过来为空，这设置为""
+    required string request_id = 1;
+	//ssp id
+	required int32 vendor_id = 2;
+	//请求时间
+	required int64 request_time = 3;
+
+
+	//晶赞用户唯一标示
+    optional string zid = 4;
+
+	message HandledAd {
+
+      optional int32 total_error_code = 1;
+	  message BidCode {
+	    //adgroup id
+		optional int64 adgroup_id = 1;
+		//错误码
+		optional int32 error_code = 2;
+	  }
+	  repeated BidCode bid_code = 2;
+
+
+	  //本次请求的错误码
+
+
+	}
+	repeated HandledAd handled_ads = 5;
+
+
+  }
+  repeated Log logs = 1;
+}

@@ -1,0 +1,229 @@
+
+package megatornlog;
+option java_package = "zampdata.records.pb";
+
+message Megatornlogs
+{
+  message Log {
+  //前四个字段日志处理要求必填，如bid过来为空，这设置为""
+    required string request_id = 1;
+	//ssp id
+	required int32 vendor_id = 2;
+	//请求时间
+	required int64 request_time = 3;
+	//平台用户id
+	required string vendor_user_id = 4;
+	//晶赞用户唯一标示
+	optional string zid = 5;
+	//处理时间
+	optional int32 process_time = 6;
+	//ip
+	optional uint32 ip = 7;
+	//ip对应的geo code,google geo table
+	optional int32 geo_code = 8;
+	//广告的来源页面
+	optional string page_refer = 9;
+	//广告所在页面url or google anonymous id
+	optional string page_url = 10;
+
+	//user agent
+	optional string user_agent = 11;
+
+	//页面类型
+	repeated string page_vertical = 12;
+	//网站类型
+	repeated string site_vertical = 13;
+	//用户兴趣
+	repeated string user_vertical = 14;
+	//浏览器id
+	optional int32 browser_id = 15;
+
+	//操作系统id
+	optional int32 os_id = 16;
+
+	message Location {
+	  //经度
+	  optional float lon = 1;
+	  //纬度
+	  optional float lat = 2;
+	}
+	optional Location location=17;
+
+	message ReqAds {
+	  //广告位id
+	  optional string ads_id = 1;
+	  //竞价的低价
+	  optional int64 min_cpm_price = 2;
+	  //高度
+	  optional int32 height = 3;
+	  //宽度
+	  optional int32 width = 4;
+	  //显示位置
+	  optional int32 slot_visibility=5;
+	  //允许投放的创意类型
+	  repeated int32 allowed_creative_type = 6;
+	  //展示类型,广告位类型
+	  optional int32 view_type = 7;
+	  //deal id
+	  optional string direct_deal_id = 8;
+	  //广告可见的概率
+	  optional int32 viewability=9;
+	}
+	repeated ReqAds request_ads = 50;
+
+	message HandledAd {
+	  //广告主id
+	  optional int64 advertiser_id = 1;
+	  //campign id
+	  optional int64 campign_id = 2;
+	  //adgroup id
+	  optional int64 adgroup_id = 3;
+	  //creative id
+	  optional int64 ad_id = 4;
+	  //竞价价格
+	  optional int64 bid_price = 5;
+
+	  message BidCode {
+	    //adgroup id
+		optional int64 adgroup_id = 1;
+		//错误码
+		optional int32 error_code = 2;
+	  }
+	  repeated BidCode bid_code = 6;
+	  //本次请求的错误码
+	  optional int32 total_error_code = 7;
+
+	  //用户的segment
+	  repeated Segment user_segements = 8;
+	  //robot pricing_alpha
+	  optional float pricing_alpha = 9; 
+
+      //cpm,cpc
+	  optional int32 bid_mode = 10;
+	  //点击率
+	  optional int64 ctr = 11;
+      //Segment结构用于取代Zampda 2.0的segment id.
+	  //1:受众人群, 2：相似人群等,3：第三方人群
+	  message Segment{
+	    //Segment的类型, 受众人群, KW人群, 相似人群等
+	    required int32 type = 1;
+	    //Segment在对应来源中的值
+	    required int64 id = 2;
+	  }
+	  //投放设置的定向segament标签
+	  repeated Segment target_segment= 12;
+	  //
+	  optional string bucket_id = 13;
+	  //robot algorithm_name
+	  optional string robot_tag = 15;
+	  // 用于高密度显示设备（如iOS的视网膜显示器）。
+	  // 默认值为1000
+	  // 非默认值表示当前的屏幕尺寸（以像素为单位）
+	  // 没有描述屏幕像素的实际数量。
+	  optional string robot_name = 16;
+
+	  message AllSegment{
+	    required int32 type = 1;
+	    required int64 advtiser_id = 2;
+        required int64 timestamp = 3;
+	    repeated int64 segment_id = 4;
+	  }
+	  repeated AllSegment all_segments = 17;
+	}
+	repeated HandledAd handled_ads = 51;
+
+	message Mobile {
+	  //is app
+	  optional bool is_app = 1;
+
+	  //app id
+	  optional string app_id = 2;
+	  //app name
+	  optional string app_name = 3;
+	  //app categroy
+	  repeated string app_vertical = 4 ;
+	  //app version
+	  optional string app_version = 5;
+	  //is free
+	  optional int32 app_is_free = 6 ;
+
+	  //运营商
+	  optional string carrier_id = 7;
+	  //联网方式
+	  optional string network = 8;
+	  //设备类型
+	  optional string device_type = 9;
+	  //屏幕高度
+	  optional int32 screen_height = 10;
+	  //屏幕宽度
+	  optional int32 screen_width = 11;
+	  //品牌
+	  optional string brand = 12;
+	  //型号
+	  optional string model = 13;
+
+	  //操作系统
+	  optional string platform = 14;
+	  //操作系统版本
+	  optional string os_version = 15;
+
+	  //idfa or hash idfa
+	  optional string for_advertising_id = 16;
+
+	  //include device_id
+	  optional string device_id = 17;
+
+	  //当deviceid不可用时将didmd5写入到device_id, 其他情况不需要落地
+	  optional string device_id_md5 = 18;
+	  //mac address
+	  optional string mac = 19;
+	  //当mac不可用时将macmd5落地
+	  optional string mac_md5 = 20;
+
+	  //density
+	  optional int32 density = 21;
+	}
+	optional Mobile mobile_info=52;
+
+	message Ext {
+	  //年龄
+	  optional int32 age = 1;
+	  //性别
+	  optional string gender = 2;
+	  //关键词
+	  optional string keywords = 3;
+	  //优酷频道1
+	  optional string content_channel_lv1 = 4;
+	  //优酷频道2
+	  optional string content_channel_lv2 = 5;
+	  //优酷网站内容标题
+	  optional string content_title = 6;
+	  //优酷GPS的精确度，单位为米。如：100表示精确度为100米
+	  optional int32 geo_accuracy = 7;
+	  //优酷wifi的地点，如公司，家庭
+	  optional string wifi_ssid = 8;
+	  //优酷，出生年份（Year Of Birth），4位数字，如1988
+	  optional int32 birth_date = 9;
+
+	  //网站质量
+	  optional int32 site_quality = 10;
+	  //页面质量
+	  optional int32 page_quality = 11;
+	  //页面类型,暂时只有百度有该字段
+	  optional int32 page_type = 12;
+
+	  //语言，暂时有google request 提供
+	  optional string language = 13;
+
+	  //网站名称
+	  optional string site_name = 14;
+
+      // 匿名id
+      optional string anonymous_id = 15;
+	  //页面类型
+	  repeated string page_vertical = 16;
+	}
+	optional Ext ext=53;
+  }
+  repeated Log logs = 1;
+}

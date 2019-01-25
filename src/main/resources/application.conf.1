@@ -1,0 +1,192 @@
+kafka {
+  zookeeper = "10.77.77.3:2333,10.77.77.44:2333,10.77.77.45:2333"
+  zookeeper_timeout = "50000"
+  zookeeper_session_timeout = "10000"
+  zookeeper_rebalance_backoff = "2000"
+  zookeeper_rebalance_max = "10"
+  zookeeper_sync_time = "10000"
+  group = "rtmtest001"
+  chance = "1.0"
+}
+
+zampct {
+
+  timeout = 5000
+  apiHost = "http://172.22.70.40:19100"
+  zids = "/v1/api/zids"
+  pushRtb = "/v1/api/ct_rtbs"
+  pushCm = "/v1/api/ct_cms"
+  pushSeg = "/v1/api/ct_segments"
+  pushRender = "/v1/api/ct_renders"
+}
+
+spark {
+  //  parallelism = "2"
+  appname = "RTM-STREAMING"
+  parallelism = "2"
+  master = "spark://BY-ROB01:7077"
+  total-executor-cores = 16
+  executor-memory = 40G
+  concurrentJobs = 1
+  //  repartition = 32
+  streaming {
+    # aggregate by 60s
+    window = 60
+    batchInterval = 2
+  }
+  checkpointdir = "/home/changjian/rtm_streaming/conf/BY-ROB01/checkpoint"  #
+  memoryFraction = "0.6"
+  blockQueueSize = 10
+  ttlTime = 300
+}
+
+components {
+  rtb {
+    enabled = true
+    windowTasks = 8
+    batchTasks = 8
+    topics: [
+      {
+        name: "megatron"
+        parallel: 5
+
+      }
+    ]
+  }
+
+  // add 2015-05-19 Joey.Chang
+  rtbdebug {
+    enabled = true
+    topics : [
+      {
+        name: "megatron_debug_log",
+        //        name: "tracking_tms_c3",
+        parallel: 1
+      }
+    ]
+  }
+
+  win {
+    enabled = false
+    topics : [
+      {
+        name: "billing_log",
+        parallel: 1
+      }
+    ]
+  }
+
+  tracking {
+    enabled = false
+    topics : [
+      {
+        name: "tracking_imp_i3",
+        parallel: 1
+      }, {
+        name: "tracking_tms_c3",
+        parallel: 1
+      }
+    ]
+  }
+
+  mwin {
+    enabled = false
+    topics : [
+      {
+        name: "win_log",
+        parallel: 4
+      }
+    ]
+  }
+
+  // add 2015-05-19 Joey.Chang
+  conv {
+    enabled = false
+    topics : [
+      {
+        name: "tracking_imp_conv",
+        parallel: 1
+      }
+    ]
+  }
+
+  dasp {
+    enabled = false
+    topics : [
+      {
+        name: "tracking_imp_dasp3",
+        parallel: 1
+      }
+    ]
+  }
+
+  daspsdk {
+    enabled = false
+    topics: [
+      {
+        name: "mob_tracking_app_e",
+        parallel: 1
+      }
+    ]
+  }
+
+  daspmob {
+    enabled = false
+    topics: [
+      {
+        name: "tracking_imp_yd",
+        parallel: 1
+      }
+    ]
+  }
+
+  uma {
+    enabled = false
+    topics : [
+      {
+        name: "tracking_imp_simp",
+        parallel: 1
+      }
+    ]
+  }
+
+  segment {
+    enabled = false
+    topics : [
+      {
+        name: "segment_pb_log",
+        parallel: 1
+      }
+    ]
+  }
+
+  idmap {
+    enabled = false
+    topics : [
+      {
+        name: "idmap_pb_log",
+        parallel: 1
+      }
+    ]
+  }
+
+  render {
+    enabled = false
+    topics: [
+      {
+        name : "render",
+        parallel: 1
+      }
+    ]
+  }
+
+}
+
+db {
+  subprotocol = "mysql"
+  host = "172.22.57.41"
+  port = 3306
+  user = "user_rtm"
+  passwd = "jc2mt56d"
+  database = "rtm"
+}

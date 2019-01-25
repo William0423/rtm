@@ -1,0 +1,31 @@
+package tracking;
+
+message common_log
+{
+	required int64 request_time = 1; //unixtime 
+	required uint32 ip = 2; // 
+	required int32 status= 3; // http status 
+	required string uri= 4; // http request line not include param 
+	required string zid= 5; // 
+	required string param= 6; // 
+	required string body= 7; // 
+	required string ua= 8; // 
+	required int64 process_time = 9; //
+	required string refer= 10; //
+	optional string request_id = 11; // mk request_id 
+}
+
+message smartpixel_log
+{
+	required int64 request_time = 1; // unixtime 
+	required uint32 ip = 2; // 
+	required int32 status= 3; // http status 
+	required string uri= 4; // http request line not include param 
+	required string zid= 5; // 
+	required string param= 6; // 
+	required string body= 7; // 
+	required string ua= 8; // 
+	required int64 process_time = 9; // microseconds
+	required string refer= 10; //
+	required string cookie= 11; //
+}

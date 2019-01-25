@@ -1,0 +1,31 @@
+
+message billing_log {
+  required	string 	request_time = 1;   // 请求时间, %H:%M:%S
+  required	string 	log_type = 2;       // 日志类型: w
+  required	int32 	project_id = 3;     // 项目编号
+  required	int64 	advertiser_id = 4;  // 广告主编号
+  required	int64 	campaign_id = 5;    // 广告系列编号
+  required	int64 	adgroup_id = 6;     // 广告组编号
+  required	int64 	ad_id = 7;          // 广告编号
+  required	int32 	vendor_id = 8;      // 平台编号: 1 adx, 2 tanx, 3 mindx, ...
+  required	string 	encrypt_price = 9;  // 价格原始加密串
+  required	int64 	win_price = 10;     // 成交价格(单位:1/1,000,000元)
+  required	string 	request_id = 11;    // 竞价请求序列号
+  required	string 	adslot_id = 12;     // 广告位编号
+  required	string 	user_id = 13;       // 用户id
+  required	string 	client_ip = 14;     // 用户ip地址
+  required	string 	top_referer = 15;   // 广告位页面地址
+  required	string 	parse_code  = 16;   // 解析代码
+  required	string 	spam_code = 17;     // 反作弊代码
+  required	int32 	process_time = 18;  // 处理时间(毫秒)
+  required	string 	user_agent = 19;    // 浏览器信息
+  required	int32 	adslot_width = 20;  // 广告位宽度(pixel)
+  required	int32 	adslot_height = 21; // 广告位高度(pixel)
+  required	string 	x_forword_for = 22; // ip代理 
+  optional	string 	mk = 23;            // mk校验码
+  optional	string 	ext_data = 24;      // 扩展字段 
+  optional  string  referer = 25;       // 广告位上级地址
+  optional  string  uri = 26;           // 请求uri
+  optional  int64   template_id = 27;   // 投放模板id
+  optional  int64   display_rule_id = 28; // 展示规则id
+}

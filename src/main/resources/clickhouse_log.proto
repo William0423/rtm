@@ -1,0 +1,116 @@
+syntax = "proto3";
+import "brain_user.proto";
+
+package clickhouse;
+option java_package = "com.zamplus.pb";
+
+message DebugScoreStruct{
+  int64 BidCampaginId = 1;
+  string Key = 2;
+  float Score = 3;
+  float Threshold = 4;
+};
+
+message PvScoreStruct{
+  string Key = 1;
+  float Score = 2;
+};
+
+message CLRtb{
+  string   RequestId = 1;
+
+  //time 
+  int64 Timestamp = 2;
+
+  //Id 
+  string   Zid = 3;
+  string   Pid = 4;
+
+  //media 
+  string   VendorId = 5;
+  string   Domain = 6;
+  string   Url = 7;
+  string   Ua = 8;
+  string   Refer = 9;
+
+  //slot 
+  string   AdslotId = 10; 
+  int64 AdslotWidth = 11; 
+  int64 AdslotHeight = 12; 
+  bool IsApp = 13; 
+  int64 MinPrice = 14; 
+  int64 PvType = 15; 
+  repeated int64 ViewType = 16; 
+  repeated int64 SupportType = 17; 
+
+  //device 
+  string   DeviceOs = 18; 
+  string   DeviceOsVersion = 19; 
+  string   DeviceNetwork =20;
+  string   DeviceModel = 21; 
+  string   DeviceBrand = 22; 
+  map<int64, string> DeviceId = 23; 
+
+  //app 
+  repeated string AppCategory = 24; 
+  string   AppVersion = 25; 
+
+  //geo 
+  int64 GeoCode = 26; 
+  int64 Ip = 27; 
+  string   Longtitue = 28; 
+  string   Latitude = 29; 
+
+  //User 
+  repeated string UserVertical = 30; 
+  map<int64 , int64> SegmentId =31;
+
+  User adb_user = 32;
+
+  //Bid
+  int64 BidCampanyId = 33;
+  int64 BidCampaignId = 34;
+  int64 BidAdgroupId = 35;
+  int64 BidAdId = 36;
+  int64 BidMode = 38;
+  int64 BidPrice = 39;
+  int64 TotalErrorCode = 40;
+  map<int64, int64> AdgroupErrorCode = 41;
+
+  //score
+  repeated DebugScoreStruct DebugBidScore = 42;
+  repeated PvScoreStruct PvScore = 43;
+  PvScoreStruct BidScore = 44;
+
+  //index type
+  int64 IndexType = 45;
+
+  //Ad info
+  map<string, string> bid_ad_info_kv = 46;
+  string bid_ad_title = 47;
+  string bid_ad_descrption = 48;
+  //ext 
+  string ext_key1 = 101;
+  string ext_key2 = 102;
+  string ext_key3 = 103;
+  string ext_key4 = 104;
+  string ext_key5 = 105;
+
+  repeated string ext_array1 = 106;
+  repeated string ext_array2 = 107;
+  repeated string ext_array3 = 108;
+  repeated string ext_array4 = 109;
+  repeated string ext_array5 = 110;
+
+  map<string, string> ext_map1 = 111;
+  map<string, string> ext_map2 = 112;
+  map<string, string> ext_map3 = 113;
+  map<string, string> ext_map4 = 114;
+  map<string, string> ext_map5 = 115;
+}
+
+
+
+
+
+
